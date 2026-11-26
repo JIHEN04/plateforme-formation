@@ -1,128 +1,36 @@
-@let formations = [
+<form>
+  <!--2 way data Binding-->
+  <input type="text" name="title" class="form-control"
+         placeholder="search by title" [(ngModel)]="searchTitle">
+</form>
+<h1>{{searchTitle}}</h1>
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th>title</th>
+    <th>date</th>
+    <th>address</th>
+    <th>Available places</th>
+    <th>Participate</th></tr>
+  <!--boucle For-->
+  @for (conference of listConferences; track conference.id)
   {
-    id: 1,
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80',
-    title: 'Développement Web avec Angular',
-    address: 'Centre de formation, Lac 2, Tunis',
-    date: '10 Décembre 2026 • 09:00',
-    description: 'Apprenez à créer des applications web modernes avec Angular, TypeScript et Bootstrap, de zéro jusqu’au déploiement.',
-    nbr_available: 20
-  },
-  {
-    id: 2,
-    image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80',
-    title: 'Programmation Java & Spring Boot',
-    address: 'Technopôle El Ghazala, Ariana',
-    date: '17 Décembre 2026 • 10:00',
-    description: 'Maîtrisez la programmation orientée objet, les API REST et les microservices avec Spring Boot.',
-    nbr_available: 8
-  },
-  {
-    id: 3,
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
-    title: 'Data Science & Intelligence Artificielle',
-    address: 'En ligne (Zoom)',
-    date: '07 Janvier 2027 • 14:00',
-    description: 'Analyse de données, visualisation et introduction au machine learning avec Python.',
-    nbr_available: 0
-  },
-  {
-    id: 4,
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80',
-    title: 'Cybersécurité pour débutants',
-    address: 'Hôtel Laico, Tunis',
-    date: '21 Janvier 2027 • 09:30',
-    description: 'Comprendre les menaces, protéger les données et adopter les bonnes pratiques de sécurité.',
-    nbr_available: 25
-  },
-  {
-    id: 5,
-    image: 'https://images.unsplash.com/photo-1591115765373-5207764f72e7?auto=format&fit=crop&w=800&q=80',
-    title: 'UX/UI Design & Prototypage',
-    address: 'La Station, Berges du Lac 2, Tunis',
-    date: '04 Février 2027 • 13:30',
-    description: 'Concevoir des interfaces claires et modernes, du wireframe jusqu’au prototype interactif.',
-    nbr_available: 15
-  },
-  {
-    id: 6,
-    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=80',
-    title: 'DevOps : Docker & CI/CD',
-    address: 'Pôle Technologique de Sousse',
-    date: '18 Février 2027 • 10:00',
-    description: 'Automatisez vos tests et déploiements avec Git, Docker et les pipelines d’intégration continue.',
-    nbr_available: 3
-  }
-];
-
-<!-- En-tête -->
-<section class="bg-light border-bottom py-5">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-8">
-        <span class="badge rounded-pill text-bg-primary px-3 py-2 mb-3">Plateforme de formation</span>
-        <h1 class="display-5 fw-bold mb-3">Nos prochaines formations</h1>
-        <p class="lead text-secondary mb-0">
-          Consultez le catalogue des formations, leurs lieux, dates et places disponibles.
-        </p>
-      </div>
-      <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
-        <div class="d-inline-block bg-white border rounded-3 p-3 shadow-sm text-start">
-          <small class="text-muted d-block">Total programmé</small>
-          <span class="fs-4 fw-bold text-primary">{{ formations.length }} Formations</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Cartes -->
-<section id="formations" class="container py-5">
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
-    @for (f of formations; track f.id) {
-      <div class="col">
-        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-
-          <div class="position-relative">
-            <img [src]="f.image" [alt]="f.title" class="card-img-top object-fit-cover" height="210">
-            <div class="position-absolute top-0 end-0 m-3">
-              @if (f.nbr_available > 10) {
-                <span class="badge rounded-pill text-bg-success px-3 py-2">{{ f.nbr_available }} places</span>
-              } @else if (f.nbr_available > 0) {
-                <span class="badge rounded-pill text-bg-warning px-3 py-2">Plus que {{ f.nbr_available }}</span>
-              } @else {
-                <span class="badge rounded-pill text-bg-danger px-3 py-2">Complet</span>
-              }
-            </div>
-          </div>
-
-          <div class="card-body d-flex flex-column p-4">
-            <div class="text-primary small fw-semibold mb-2">{{ f.date }}</div>
-            <h5 class="card-title fw-bold mb-2">{{ f.title }}</h5>
-            <p class="text-muted small mb-3">{{ f.address }}</p>
-            <p class="card-text text-secondary small flex-grow-1 mb-4">{{ f.description }}</p>
-
-            <div class="pt-3 border-top d-flex justify-content-between align-items-center">
-              <span class="small text-muted">
-                Places :
-                <strong [class.text-success]="f.nbr_available > 0" [class.text-danger]="f.nbr_available === 0">
-                  {{ f.nbr_available }}
-                </strong>
-              </span>
-              <button type="button"
-                      class="btn btn-sm px-3 rounded-pill fw-semibold"
-                      [class.btn-primary]="f.nbr_available > 0"
-                      [class.btn-secondary]="f.nbr_available === 0"
-                      [disabled]="f.nbr_available === 0">
-                @if (f.nbr_available > 0) { S’inscrire } @else { Complet }
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    }
-
-  </div>
-</section>
+    @if (conference.title==searchTitle || searchTitle==null){
+      <tr>
+        <td>{{conference.id}}</td>
+        <td>{{conference.title | uppercase}}</td>
+        <td>{{conference.date}}</td>
+        <td>{{conference.address}}</td>
+        <td>{{conference.nbr_Max-conference.nbr_Participation}}</td>
+        <td>
+          <!--2-Property Binding: [Property]="variable"-->
+          <!--3-Event Binding: (event)=action()-->
+          <button class="btn btn-sm btn-success"
+                  [hidden]="!(conference.nbr_Max-conference.nbr_Participation>0)"
+                  (click)="participate(conference)" >
+            participate
+          </button>
+        </td>
+      </tr>
+    }}
+</table>
